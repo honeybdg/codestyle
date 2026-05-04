@@ -1,6 +1,6 @@
 {
   "name": "@honeybdg/codestyle",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Tooling and configuration for code style enforcement",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

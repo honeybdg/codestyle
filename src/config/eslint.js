@@ -1,9 +1,9 @@
-const globals = require('globals');
 const pluginJs = require('@eslint/js');
+const pluginStylistic = require('@stylistic/eslint-plugin');
+const pluginImport = require('eslint-plugin-import');
 const pluginJsdoc = require('eslint-plugin-jsdoc');
 const pluginReact = require('eslint-plugin-react');
-const pluginImport = require('eslint-plugin-import');
-const pluginStylistic = require('@stylistic/eslint-plugin');
+const globals = require('globals');
 
 /** @type {import('eslint').Linter.Config[]} */
 module.exports = [
@@ -29,9 +29,7 @@ module.exports = [
       },
     },
     settings: {
-      'react': {
-        version: 'detect',
-      },
+      react: { version: '19.0' },
       'import/resolver': {
         node: {
           paths: ['.'],
@@ -40,10 +38,10 @@ module.exports = [
       },
     },
     rules: {
-      'camelcase': ['error', { properties: 'never' }],
+      camelcase: ['error', { properties: 'never' }],
       'no-console': 'error',
-      'curly': 'error',
-      'eqeqeq': 'error',
+      curly: 'error',
+      eqeqeq: 'error',
       'new-cap': ['error', { capIsNew: false }],
       'no-array-constructor': 'error',
       'no-caller': 'error',
@@ -84,9 +82,9 @@ module.exports = [
       'symbol-description': 'error',
       'unicode-bom': ['error', 'never'],
       'valid-typeof': ['error', { requireStringLiterals: true }],
-      'yoda': ['error', 'never'],
+      yoda: ['error', 'never'],
       'prefer-const': 'error',
-      'strict': ['error', 'never'],
+      strict: ['error', 'never'],
 
       '@stylistic/arrow-parens': ['error', 'always'],
       '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
@@ -115,6 +113,19 @@ module.exports = [
         asyncArrow: 'always',
         catch: 'always',
       }],
+      '@stylistic/jsx-closing-tag-location': ['error', 'line-aligned'],
+      '@stylistic/jsx-one-expression-per-line': 'off',
+      '@stylistic/jsx-closing-bracket-location': ['error', 'line-aligned'],
+      '@stylistic/jsx-wrap-multilines': ['error', {
+        declaration: 'ignore',
+        assignment: 'ignore',
+        return: 'parens-new-line',
+        arrow: 'ignore',
+        condition: 'ignore',
+        logical: 'ignore',
+        prop: 'ignore',
+        propertyValue: 'ignore',
+      }],
 
       'jsdoc/check-tag-names': ['error', { definedTags: ['swagger'] }],
       'jsdoc/require-returns': ['error', { forceRequireReturn: true }],
@@ -133,7 +144,18 @@ module.exports = [
         exemptEmptyConstructors: true,
       }],
 
+      'import/no-cycle': ['error', { maxDepth: Infinity }],
+      'import/no-duplicates': 'error',
       'import/enforce-node-protocol-usage': ['error', 'always'],
+      'import/order': ['error', {
+        groups: [
+          'builtin',
+          'external',
+          ['internal', 'parent', 'sibling', 'index'],
+        ],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc' },
+      }],
     },
   },
 ];
