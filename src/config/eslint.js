@@ -136,6 +136,7 @@ module.exports = [
       'jsdoc/require-jsdoc': ['error', {
         require: {
           ClassDeclaration: true,
+          ClassExpression: true,
           FunctionDeclaration: true,
           FunctionExpression: true,
           MethodDefinition: true,
@@ -154,7 +155,6 @@ module.exports = [
           ['internal', 'parent', 'sibling', 'index'],
         ],
         'newlines-between': 'always',
-        alphabetize: { order: 'asc' },
       }],
     },
   },
