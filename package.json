@@ -1,6 +1,6 @@
 {
   "name": "@honeybdg/codestyle",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Tooling and configuration for code style enforcement",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -35,5 +35,8 @@
   },
   "engines": {
     "node": "24"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
   }
 }
