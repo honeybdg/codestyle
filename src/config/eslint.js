@@ -12,7 +12,6 @@ module.exports = [
   pluginJsdoc.configs['flat/recommended-error'],
   pluginReact.configs.flat.recommended,
   pluginImport.flatConfigs.recommended,
-  // pluginStylistic.configs.recommended,
   pluginStylistic.configs.recommended,
   {
     languageOptions: {
@@ -93,7 +92,18 @@ module.exports = [
       '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
       '@stylistic/semi': ['error', 'always'],
       '@stylistic/object-curly-spacing': ['error', 'always'],
-      '@stylistic/comma-dangle': ['error', 'always-multiline'],
+      '@stylistic/max-statements-per-line': ['error', { max: 5 }],
+      '@stylistic/quote-props': 'off',
+      '@stylistic/comma-dangle': ['error', {
+        arrays: 'always-multiline',
+        objects: 'always-multiline',
+        imports: 'always-multiline',
+        exports: 'always-multiline',
+        importAttributes: 'always-multiline',
+        enums: 'always-multiline',
+        generics: 'always-multiline',
+        tuples: 'always-multiline',
+      }],
       '@stylistic/indent': ['error', 2, { SwitchCase: 1 }],
       '@stylistic/function-call-spacing': 'error',
       '@stylistic/no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1 }],
@@ -114,12 +124,13 @@ module.exports = [
       'jsdoc/reject-any-type': 'off',
       'jsdoc/require-jsdoc': ['error', {
         require: {
-          ArrowFunctionExpression: true,
           ClassDeclaration: true,
           FunctionDeclaration: true,
           FunctionExpression: true,
           MethodDefinition: true,
         },
+        contexts: ['VariableDeclarator > ArrowFunctionExpression'],
+        exemptEmptyConstructors: true,
       }],
 
       'import/enforce-node-protocol-usage': ['error', 'always'],
