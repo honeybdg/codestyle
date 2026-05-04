@@ -1,6 +1,6 @@
 {
   "name": "@honeybdg/codestyle",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Tooling and configuration for code style enforcement",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -18,7 +18,7 @@
     "eslint"
   ],
   "scripts": {
-    "build": "tsc && node -e \"require('fs').cpSync('src', 'lib', {recursive: true})\"",
+    "build": "tsc && node -e \"require('fs').cpSync('src', 'lib', { recursive: true })\"",
     "lint": "npm run lint:eslint && npm run lint:stylelint",
     "lint:eslint": "eslint .",
     "lint:stylelint": "stylelint **/*.css"
