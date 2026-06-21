@@ -1,6 +1,6 @@
 {
   "name": "@honeybdg/codestyle",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Tooling and configuration for code style enforcement",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -28,14 +28,14 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsdoc": "^62.9.0",
     "eslint-plugin-react": "^7.37.5",
-    "globals": "^17.5.0",
-    "stylelint": "^17.9.0",
+    "globals": "^17.6.0",
+    "stylelint": "^17.13.0",
     "stylelint-config-standard": "^40.0.0"
-  },
-  "engines": {
-    "node": "24"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }
