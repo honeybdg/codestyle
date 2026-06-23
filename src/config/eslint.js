@@ -31,6 +31,9 @@ module.exports = [
     settings: {
       react: { version: '19.0' },
       'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+        },
         node: {
           paths: ['.'],
           extensions: ['.js', '.jsx', '.cjs', '.mjs'],
@@ -145,6 +148,7 @@ module.exports = [
         exemptEmptyConstructors: true,
       }],
 
+      'import/no-unresolved': ['error', { commonjs: true }],
       'import/no-cycle': ['error', { maxDepth: Infinity }],
       'import/no-duplicates': 'error',
       'import/enforce-node-protocol-usage': ['error', 'always'],
