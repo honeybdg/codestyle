@@ -18,8 +18,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "lint": "eslint ./src eslint.config.js",
-    "test": "eslint ./test"
+    "lint": "eslint ./src eslint.config.js"
   },
   "dependencies": {
     "@stylistic/eslint-plugin": "^5.10.0",
