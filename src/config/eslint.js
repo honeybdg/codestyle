@@ -1,4 +1,5 @@
 const pluginJs = require('@eslint/js');
+const pluginTs = require('typescript-eslint');
 const pluginStylistic = require('@stylistic/eslint-plugin');
 const pluginImport = require('eslint-plugin-import');
 const pluginJsdoc = require('eslint-plugin-jsdoc');
@@ -7,15 +8,17 @@ const globals = require('globals');
 
 /** @type {import('eslint').Linter.Config[]} */
 module.exports = [
-  { files: ['*.js', '*.jsx', '*.cjs', '*.mjs'] },
   pluginJs.configs.recommended,
+  ...pluginTs.configs.recommended,
   pluginJsdoc.configs['flat/recommended-error'],
-  pluginReact.configs.flat.recommended,
+  pluginReact.configs.flat['jsx-runtime'],
   pluginImport.flatConfigs.recommended,
+  pluginImport.flatConfigs.typescript,
   pluginStylistic.configs.recommended,
   {
+    files: ['**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}'],
     languageOptions: {
-      ecmaVersion: 2025,
+      ecmaVersion: 2026,
       sourceType: 'module',
       parserOptions: {
         ecmaFeatures: {
@@ -25,7 +28,7 @@ module.exports = [
       globals: {
         ...globals.node,
         ...globals.browser,
-        ...globals.es2025,
+        ...globals.es2026,
       },
     },
     settings: {
@@ -33,10 +36,6 @@ module.exports = [
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
-        },
-        node: {
-          paths: ['.'],
-          extensions: ['.js', '.jsx', '.cjs', '.mjs'],
         },
       },
     },
@@ -74,11 +73,8 @@ module.exports = [
       'no-unmodified-loop-condition': 'error',
       'no-unneeded-ternary': ['error', { defaultAssignment: false }],
       'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true, allowTaggedTemplates: true }],
-      'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
-      'no-use-before-define': ['error', { functions: false, classes: false, variables: false }],
       'no-useless-call': 'error',
       'no-useless-computed-key': 'error',
-      'no-useless-constructor': 'error',
       'no-useless-rename': 'error',
       'no-useless-return': 'error',
       'one-var': ['error', { initialized: 'never' }],
@@ -129,6 +125,17 @@ module.exports = [
         prop: 'ignore',
         propertyValue: 'ignore',
       }],
+      '@stylistic/member-delimiter-style': ['error', {
+        multiline: {
+          delimiter: 'semi',
+          requireLast: true,
+        },
+        singleline: {
+          delimiter: 'semi',
+          requireLast: false,
+        },
+        multilineDetection: 'brackets',
+      }],
 
       'jsdoc/check-tag-names': ['error', { definedTags: ['swagger'] }],
       'jsdoc/require-returns': ['error', { forceRequireReturn: true }],
@@ -154,12 +161,23 @@ module.exports = [
       'import/enforce-node-protocol-usage': ['error', 'always'],
       'import/order': ['error', {
         groups: [
+          'type',
           'builtin',
           'external',
           ['internal', 'parent', 'sibling', 'index'],
+          'object',
         ],
         'newlines-between': 'always',
       }],
+
+      '@typescript-eslint/no-require-imports': 'off',
+      // you must disable the base rule as it can report incorrect errors
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
+      'no-use-before-define': 'off',
+      '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false, variables: false }],
+      'no-useless-constructor': 'off',
+      '@typescript-eslint/no-useless-constructor': 'error',
     },
   },
 ];
