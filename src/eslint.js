@@ -2,7 +2,7 @@ import { defineConfig } from 'eslint/config';
 import pluginJs from '@eslint/js';
 import pluginTs from 'typescript-eslint';
 import pluginStylistic from '@stylistic/eslint-plugin';
-import pluginImport from 'eslint-plugin-import';
+import * as pluginImport from 'eslint-plugin-import';
 import pluginJsdoc from 'eslint-plugin-jsdoc';
 import pluginReact from 'eslint-plugin-react';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
@@ -143,7 +143,7 @@ export default defineConfig([
         'newlines-between': 'always',
       }],
     },
-  }
+  },
 ]);
 
 export const typescript = defineConfig([
@@ -182,7 +182,7 @@ export const typescript = defineConfig([
 
       'jsdoc/check-tag-names': ['error', { typed: true, definedTags: ['openapi'] }],
     },
-  }
+  },
 ]);
 
 export const react = defineConfig([
@@ -221,8 +221,8 @@ export const react = defineConfig([
         prop: 'ignore',
         propertyValue: 'ignore',
       }],
-    }
-  }
+    },
+  },
 ]);
 
 export const angular = defineConfig([

@@ -14,7 +14,7 @@ const baseMsg = (name) => `Expected "${name}" to be kebab-case, camelCase or sna
 const classMsg = (name) => `Expected "${name}" to be kebab-case, camelCase, snake_case or BEM`;
 
 /** @type {import('stylelint').Config} */
-export default {
+const config = {
   extends: 'stylelint-config-standard',
   rules: {
     'custom-media-pattern': [basePattern, { message: baseMsg }],
@@ -31,3 +31,5 @@ export default {
     'declaration-block-no-redundant-longhand-properties': null,
   },
 };
+
+export default config;

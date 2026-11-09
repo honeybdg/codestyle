@@ -24,6 +24,7 @@ Available configurations
 Import the rules into eslint.config.js
 ```js
 import base, { typescript, react, angular } from '@honeybdg/codestyle/eslint';
+/** @type {import('eslint').Linter.Config[]} */
 export default [...base, ...typescript ...react ...angular];
 ```
 
@@ -33,5 +34,6 @@ export default [...base, ...typescript ...react ...angular];
 Import the rules into stylelint.config.js
 ```js
 import config from '@honeybdg/codestyle/stylelint';
+/** @type {import('stylelint').Config} */
 export default config;
 ```
