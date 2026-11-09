@@ -4,6 +4,11 @@
   "description": "Tooling and configuration for code style enforcement",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": "./lib/index.js",
+    "./eslint": "./lib/eslint.js",
+    "./stylelint": "./lib/stylelint.js"
+  },
   "license": "MIT",
   "homepage": "https://github.com/honeybdg/codestyle#readme",
   "repository": {
@@ -14,7 +19,11 @@
     "codestyle",
     "config",
     "eslint",
-    "stylelint"
+    "tslint",
+    "stylelint",
+    "typescript",
+    "react",
+    "angular"
   ],
   "scripts": {
     "build": "tsc",
@@ -23,18 +32,32 @@
   "dependencies": {
     "@stylistic/eslint-plugin": "^5.10.0",
     "angular-eslint": "^22.6.0",
-    "eslint": "^9.39.5",
     "eslint-import-resolver-typescript": "^4.4.5",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsdoc": "^65.4.2",
     "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.14.0",
-    "stylelint": "^17.16.0",
     "stylelint-config-standard": "^40.0.0",
     "typescript-eslint": "^8.72.1"
   },
   "devDependencies": {
+    "eslint": "^9.39.5",
+    "stylelint": "^17.16.0",
     "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "eslint": "^9",
+    "stylelint": "^17",
+    "typescript": "*"
+  },
+  "peerDependenciesMeta": {
+    "stylelint": {
+      "optional": true
+    },
+    "typescript": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=21.1.0"

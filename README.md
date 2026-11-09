@@ -2,6 +2,17 @@
 ===================
 Tooling and configuration for code style enforcement
 
+## Installation
+
+Basic installation:
+```bash
+npm install -D @honeybdg/codestyle eslint
+```
+If your project uses TypeScript, Stylelint, install them as dev dependencies:
+```bash
+npm install -D @honeybdg/codestyle eslint typescript stylelint
+```
+
 Available configurations
 -----------------
 1. [ESLint](#eslint)
@@ -12,13 +23,8 @@ Available configurations
 
 Import the rules into eslint.config.js
 ```js
-// esm
-import { eslint } from '@honeybdg/codestyle';
-export default eslint;
-
-// cjs
-const { eslint } = require('@honeybdg/codestyle');
-module.exports = eslint;
+import base, { typescript, react, angular } from '@honeybdg/codestyle/eslint';
+export default [...base, ...typescript ...react ...angular];
 ```
 
 <a name="stylelint">Stylelint</a>
@@ -26,11 +32,6 @@ module.exports = eslint;
 
 Import the rules into stylelint.config.js
 ```js
-// esm
-import { stylelint } from '@honeybdg/codestyle';
-export default stylelint;
-
-// cjs
-const { stylelint } = require('@honeybdg/codestyle');
-module.exports = stylelint;
+import config from '@honeybdg/codestyle/stylelint';
+export default config;
 ```

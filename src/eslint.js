@@ -1,30 +1,27 @@
-const pluginJs = require('@eslint/js');
-const pluginTs = require('typescript-eslint');
-const pluginStylistic = require('@stylistic/eslint-plugin');
-const pluginImport = require('eslint-plugin-import');
-const pluginJsdoc = require('eslint-plugin-jsdoc');
-const pluginReact = require('eslint-plugin-react');
-const globals = require('globals');
+import { defineConfig } from 'eslint/config';
+import pluginJs from '@eslint/js';
+import pluginTs from 'typescript-eslint';
+import pluginStylistic from '@stylistic/eslint-plugin';
+import pluginImport from 'eslint-plugin-import';
+import pluginJsdoc from 'eslint-plugin-jsdoc';
+import pluginReact from 'eslint-plugin-react';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
+import pluginAngular from 'angular-eslint';
+import globals from 'globals';
 
-/** @type {import('eslint').Linter.Config[]} */
-module.exports = [
-  pluginJs.configs.recommended,
-  ...pluginTs.configs.recommended,
-  pluginJsdoc.configs['flat/recommended-error'],
-  pluginReact.configs.flat['jsx-runtime'],
-  pluginImport.flatConfigs.recommended,
-  pluginImport.flatConfigs.typescript,
-  pluginStylistic.configs.recommended,
+export default defineConfig([
   {
+    name: '@honeybdg/codestyle/javascript',
     files: ['**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}'],
+    extends: [
+      pluginJs.configs.recommended,
+      pluginStylistic.configs.recommended,
+      pluginImport.flatConfigs.recommended,
+      pluginJsdoc.configs['flat/recommended-error'],
+    ],
     languageOptions: {
       ecmaVersion: 2026,
       sourceType: 'module',
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
       globals: {
         ...globals.node,
         ...globals.browser,
@@ -32,11 +29,9 @@ module.exports = [
       },
     },
     settings: {
-      react: { version: '19.0' },
       'import/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-        },
+        typescript: true,
+        node: true,
       },
     },
     rules: {
@@ -73,8 +68,11 @@ module.exports = [
       'no-unmodified-loop-condition': 'error',
       'no-unneeded-ternary': ['error', { defaultAssignment: false }],
       'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true, allowTaggedTemplates: true }],
+      'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
+      'no-use-before-define': 'error',
       'no-useless-call': 'error',
       'no-useless-computed-key': 'error',
+      'no-useless-constructor': 'error',
       'no-useless-rename': 'error',
       'no-useless-return': 'error',
       'one-var': ['error', { initialized: 'never' }],
@@ -89,7 +87,6 @@ module.exports = [
       '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
       '@stylistic/semi': ['error', 'always'],
       '@stylistic/object-curly-spacing': ['error', 'always'],
-      '@stylistic/max-statements-per-line': ['error', { max: 5 }],
       '@stylistic/quote-props': 'off',
       '@stylistic/comma-dangle': ['error', {
         arrays: 'always-multiline',
@@ -112,32 +109,8 @@ module.exports = [
         asyncArrow: 'always',
         catch: 'always',
       }],
-      '@stylistic/jsx-closing-tag-location': ['error', 'line-aligned'],
-      '@stylistic/jsx-one-expression-per-line': 'off',
-      '@stylistic/jsx-closing-bracket-location': ['error', 'line-aligned'],
-      '@stylistic/jsx-wrap-multilines': ['error', {
-        declaration: 'ignore',
-        assignment: 'ignore',
-        return: 'parens-new-line',
-        arrow: 'ignore',
-        condition: 'ignore',
-        logical: 'ignore',
-        prop: 'ignore',
-        propertyValue: 'ignore',
-      }],
-      '@stylistic/member-delimiter-style': ['error', {
-        multiline: {
-          delimiter: 'semi',
-          requireLast: true,
-        },
-        singleline: {
-          delimiter: 'semi',
-          requireLast: false,
-        },
-        multilineDetection: 'brackets',
-      }],
 
-      'jsdoc/check-tag-names': ['error', { definedTags: ['swagger'] }],
+      'jsdoc/check-tag-names': ['error', { definedTags: ['openapi'] }],
       'jsdoc/require-returns': ['error', { forceRequireReturn: true }],
       'jsdoc/require-returns-description': 'off',
       'jsdoc/tag-lines': 'off',
@@ -169,15 +142,102 @@ module.exports = [
         ],
         'newlines-between': 'always',
       }],
+    },
+  }
+]);
 
-      '@typescript-eslint/no-require-imports': 'off',
-      // you must disable the base rule as it can report incorrect errors
+export const typescript = defineConfig([
+  {
+    name: '@honeybdg/codestyle/typescript',
+    files: ['**/*.{ts,tsx,cts,mts}'],
+    extends: [
+      pluginTs.configs.eslintRecommended,
+      pluginTs.configs.recommended,
+      pluginJsdoc.configs['flat/recommended-typescript-error'],
+    ],
+    rules: {
+      '@stylistic/member-delimiter-style': ['error', {
+        multiline: {
+          delimiter: 'semi',
+          requireLast: true,
+        },
+        singleline: {
+          delimiter: 'semi',
+          requireLast: false,
+        },
+        multilineDetection: 'brackets',
+      }],
+
+      // Note: you must disable the base rule as it can report incorrect errors
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
-      'no-use-before-define': 'off',
-      '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false, variables: false }],
       'no-useless-constructor': 'off',
       '@typescript-eslint/no-useless-constructor': 'error',
+      'no-implied-eval': 'off',
+      '@typescript-eslint/no-implied-eval': 'error',
+      'no-unused-expressions': 'off',
+      '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true, allowTaggedTemplates: true }],
+      'no-use-before-define': 'off',
+      '@typescript-eslint/no-use-before-define': 'error',
+
+      'jsdoc/check-tag-names': ['error', { typed: true, definedTags: ['openapi'] }],
     },
+  }
+]);
+
+export const react = defineConfig([
+  {
+    name: '@honeybdg/codestyle/react',
+    files: ['**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}'],
+    extends: [
+      pluginReact.configs.flat.recommended,
+      pluginReact.configs.flat['jsx-runtime'],
+      pluginReactHooks.configs.flat.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+    settings: {
+      react: { version: 'detect' },
+    },
+    rules: {
+      'react/prop-types': 'off',
+      'react/display-name': 'off',
+
+      '@stylistic/jsx-closing-tag-location': ['error', 'line-aligned'],
+      '@stylistic/jsx-one-expression-per-line': 'off',
+      '@stylistic/jsx-closing-bracket-location': ['error', 'line-aligned'],
+      '@stylistic/jsx-wrap-multilines': ['error', {
+        declaration: 'ignore',
+        assignment: 'ignore',
+        return: 'parens-new-line',
+        arrow: 'ignore',
+        condition: 'ignore',
+        logical: 'ignore',
+        prop: 'ignore',
+        propertyValue: 'ignore',
+      }],
+    }
+  }
+]);
+
+export const angular = defineConfig([
+  {
+    name: '@honeybdg/codestyle/angular/typescript',
+    files: ['**/*.{ts,cts,mts}'],
+    extends: [pluginAngular.configs.tsRecommended],
+    processor: pluginAngular.processInlineTemplates,
   },
-];
+  {
+    name: '@honeybdg/codestyle/angular/templates',
+    files: ['**/*.html'],
+    extends: [
+      pluginAngular.configs.templateRecommended,
+      pluginAngular.configs.templateAccessibility,
+    ],
+  },
+]);

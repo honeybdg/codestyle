@@ -1,7 +1,4 @@
-const eslint = require('./config/eslint');
-const stylelint = require('./config/stylelint');
+import eslint from './eslint.js';
+import stylelint from './stylelint.js';
 
-module.exports = {
-  eslint,
-  stylelint,
-};
+export { eslint, stylelint };
